@@ -7,7 +7,6 @@ from kinova.kinova_control import *
 
 if __name__ == '__main__':
     try:
-        # ROS节点初始化
         rospy.init_node('kinova_test')
         
         rospy.loginfo('init kinova')
