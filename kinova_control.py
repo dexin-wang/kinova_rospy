@@ -283,32 +283,4 @@ def move_arm(unit, pose_value, relative):
     result = cartesian_pose_client(poses[:3], poses[3:])
     # rospy.loginfo('Arm endposition sent!')
     
-    
-def move_arm_mujoco(pose_value):
-    """
-    控制机械臂的末端笛卡尔运动
-    使用kinova_demo测试发现，在欧拉角为[90, 90, 0]时运动有问题
-    
-    args:
-        pose_value (list): 平移+x轴旋转，弧度
-            本程序中，该值在world_mujoco坐标系下
-        unit (str): mq (米+四元数) | mdeg (米+角度) | mrad (米+弧度)
-        relative (bool): 是否为相对运动, 绝对运动的参考坐标系为world，相对运动的参考坐标系为机械臂末端坐标系
-    """
-    assert len(pose_value) == 4
-    # 转到机械臂base坐标系下
-    x = pose_value[1]
-    y = -pose_value[0]
-    z = pose_value[2]
-    e_r = 0
-    e_p = pose_value[3]
-    e_y = 0
-    
-    pose_mq, pose_mdeg, pose_mrad = unitParser_arm('mrad', [x, y, z, e_r, e_p, e_y], relative_=True)
-    poses = [float(n) for n in pose_mq]
-
-    # rospy.loginfo('Sending arm end position ...')
-    result = cartesian_pose_client(poses[:3], poses[3:])
-    # rospy.loginfo('Arm endposition sent!')
-    
 # *********************** 机械臂控制相关：结束 ***********************
